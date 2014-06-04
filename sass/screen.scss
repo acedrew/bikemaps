@@ -1,0 +1,291 @@
+@import "bourbon";
+@import "normalize";
+
+$blue:      #2c3e50;
+$white:     #ffffff;
+$gray:      #7f9293;
+$red:       #e74c3c;
+$green:     #13987e;
+
+$colabblue: #00aadf;
+$gigtankgrey: #808280;
+$gigtankblue: #0d92bf;
+$yellowgreen: #96c93c;
+
+html, body {
+    font-size: 100%;
+}
+body {
+    font-family: 'Source Sans Pro', $helvetica;
+    
+    &:before {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(255,255,255,0.7);
+        z-index: 100;
+        content: " ";
+        display: none;
+    }
+    &.loading:before {
+        display: block;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: $gigtankblue;
+    @include transition(color 0.25s);
+}
+
+#hd {
+    font-weight: 700;
+    position: relative;
+    z-index: 10;
+    background: $gigtankgrey;
+    color: $white;
+    padding: 0.5em 1em;
+    text-align: center;
+    font-size: em(32);
+    a {
+        color: $white;
+    }
+}
+
+#previous,
+#next {
+    position: absolute;
+    margin-top: -0.5em;
+    z-index: 11;
+    color: $white;
+}
+
+#previous {
+    left: 0.5em;
+}
+
+#next {
+    right: 0.5em;
+}
+p {
+    color: #545454;
+    font-family: "Georgia", serif;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0.2em;
+    margin-bottom: 0.5em;
+    line-height: 1.4em;
+}
+h1 { 
+    font-size: 2.5em;
+    &.name {
+        text-transform: uppercase;
+        margin-top: 0;
+        margin-bottom: 0.1em;
+    }
+}
+h2 {
+    font-size: 1.75em;
+    &.title {
+        text-transform: uppercase;
+        color: $colabblue;
+        font-weight: normal;
+        margin-bottom: 0;
+    }
+}
+h3 {
+    font-size: 1.375em;
+    &.areas {
+        text-transform: uppercase;
+        color: #2c3e50;
+        margin-top: 0.5em;
+    }
+}
+h4 { 
+    font-size: 1.125em;
+    &.subheader { 
+        color: $gigtankgrey;
+        font-style: italic;
+    }
+}
+
+.no-events {
+    padding: 0 1em;
+    text-align: center;
+}
+ul {
+    line-height: 1.6em;
+    margin-bottom: 1.11em;
+    font-family: inherit;
+        &.no-bullet {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+}
+#announcements, #events {
+    li {
+        position: relative;
+        z-index: 1;
+        padding: 1em 1em 1em 7em;
+        border-bottom: 1px solid $gray;
+        min-height: 4em;
+
+        .block {
+            position: absolute;
+            background: $gigtankblue;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 6em;
+            padding: 1em 0;
+            text-align: center;
+            color: $white;
+            border-bottom: 1px solid $white;
+            margin-bottom: -1px;
+        }
+        .day, .date, .time {
+            display: block;
+        }
+        .day {
+            font-size: em(32);
+            font-weight: 700;
+        }
+        .date {
+            font-size: em(20);
+        }
+        .time {
+            font-style: italic;
+        }
+        .description,
+        .location {
+            word-wrap: break-word;
+            margin: 0 0 0.5em;
+        }
+        .notes {
+            word-wrap: break-word;
+        }
+    }
+}
+.column {
+    padding-left: 0.9375em;
+    padding-right: 2em;
+}
+.left { 
+    float: left;
+}
+.mentor {
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 5.5em;
+}
+.contact {
+    background-color: #f8f8f8;
+    width: 100%;
+}
+.button {
+    text-align: center;
+    background-color: $gigtankblue;
+    color: #fff;
+    transition: background-color 300ms ease-out;
+    padding: 0.9em 1.8em 0.95em 1.8em;
+    display: inherit;
+    &:hover {
+        background-color: $colabblue;
+    }
+    &.large {
+        font-size: 1.25em;
+        padding: 0.9em 1.8em 0.95em 1.8em;
+    }
+    &.nav::after {
+        content: '\2192';
+    }
+}
+.button-group {
+    list-style: none;
+    margin: 0; 
+    padding: 0;
+    left: 0;
+    li {
+        margin-bottom: 1px;
+    }
+}
+/************************************************************/
+/*
+/*  bus mapping styles
+/*
+/***********************************************************/
+#home {
+    height: 80%;
+    position: relative;
+    background-color: #ced8e0;
+}
+#map-canvas {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+#footer-grab {
+  background-color: #000;
+  position: absolute;
+  bottom: 22px;
+  height: 50px;
+  width: 50px;
+  right: 0px;
+}
+.site {
+  font-size: 115%;
+  height: 100%;
+  text-align: justify;
+  max-width: 60em;
+  margin: 0em auto 2em;
+  line-height: 1.5em;
+}
+.footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  overflow: hidden;
+}
+.attribution, .contact {
+  float: left;
+  margin-right: 3em;
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+    span {
+        display: block;
+    }
+}
+
+.contact a {
+  color: #8085C1;
+}
+
+.footer .rss {
+  margin-top: 1.1em;
+  margin-right: -.2em;
+  float: right;
+}
+
+.footer .rss img {
+  border: 0;
+}
+/************************************************************/
+/*
+/*  contacts           
+/*
+/***********************************************************/
+
+.members {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+div#teams  > .team:nth-of-type(odd) {
+    .members {
+        background-color: #f8f8f8;
+        background-color: #f6fafb;
+        width: 100%;
+    }
+}
