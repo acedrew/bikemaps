@@ -38,78 +38,12 @@ function drawBikeStation(station) {
         window.bikeMarkers[station.id].setOptions(options);
     } else {
         window.bikeMarkers[station.id]  = new google.maps.Marker(options);
+        google.maps.event.addListener(window.bikeMarkers[station.id], 'click', function (mouseEvent) {
+            dataWindow.open(map);
+        });
     }
-    google.maps.event.addListener(window.bikeMarkers[station.id], 'click', function (mouseEvent) {
-        dataWindow.open(map);
-    });
 
         
-}
-    
-function drawBus(bus) {
-    if(bus.properties.route == "U") {
-        return
-    }
-    var color = "#000000";
-    var headings = {
-        N: 0,
-        NNE: 22.5,
-        NE: 45,
-        ENE: 67.5,
-        E: 90,
-        ESE: 112.5,
-        SE: 135,
-        SSE: 157.5,
-        S: 180,
-        SSW: 202.5,
-        SW: 225,
-        WSW: 247.5,
-        W: 270,
-        WNW: 292.5,
-        NW: 315,
-        NNW: 337.5
-    }
-    if(bus.properties.route == "33" || bus.properties.route == "34") {
-        color = "#029f5b"
-    }
-    var symbol = {
-        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-        scale: 3,
-        rotation: heading,
-        fillColor: color,
-        strokeColor: color
-    }
-    buslocation =  new google.maps.LatLng(bus.geometry.coordinates[1], bus.geometry.coordinates[0]);
-    var heading = headings[bus.properties.heading];
-    if(!window.buses[bus.id]) {
-        window.buses[bus.id] = new google.maps.Marker({
-            position: buslocation,
-            title: ("Bus #" + bus.id + ", Route #" + bus.properties.route),
-            icon: symbol,
-            map: map,
-            properties: bus.properties
-            });
-            google.maps.event.addListener(window.buses[bus.id], 'click', function (mouseEvent) {
-                var dataWindow = new google.maps.InfoWindow({
-                    content:  ("Bus #" + bus.id + ", Route #" + bus.properties.route + ", Towards: " + bus.properties.stop),
-                    position: window.buses[bus.id].position
-                });
-                dataWindow.open(map);
-            });
-    } else {
-        window.buses[bus.id].setPosition(buslocation);
-        var iconUpdate = window.buses[bus.id].getIcon();
-        iconUpdate.rotation = heading;
-        window.buses[bus.id].setIcon(iconUpdate);
-    }
-}
-    
-function killBus(bus) {
-    if(window.buses[bus.id]) {
-        window.buses[bus.id].setMap(null);
-        window.buses[bus.id] = null;
-        delete window.buses[bus.id];
-    }
 }
 function setCurrentLocation() {
     if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function(pos) {
@@ -134,19 +68,6 @@ function setCurrentLocation() {
     });
 
 }
-function reset(map) {
-    console.log('reset');
-    var keys = [];
-    for(var k in window.buses) keys.push(k);
-    var i = keys.length;
-    while(i--) {
-        window.buses[keys[i]].setMap(null);
-        window.buses[keys[i]] = null;
-        delete window.buses[keys[i]];
-    }
-    chabusInitialize(map);
-}
-        
 function chabikeInitialize(map) {
     var evntSource = new EventSource('http://radiant-caverns-5667.herokuapp.com/api/stations/stream')
     window.bikeMarkers = {};
